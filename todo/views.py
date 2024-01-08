@@ -5,7 +5,7 @@ from .models import item
 
 
 def get_todo_list(request):
-    items = item.object.all()
+    items = item.objects.all()
     context = {
         'items': items
     }
