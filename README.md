@@ -1,5 +1,7 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
+This was the old learning. I'm creating a new one: ci-fsf-Django. That will hopefully work when deploying. This one struggled a lot, think it was dated commans and so on when trying to learn how to deploy it. This project is ''Done'' But cannot be deployd. So work in progress. 
+
 Welcome Axel Lewing, Superuser for browser (Name: Admin93 , Password: 12345678) / Superuser for ElephantSQL (Name: test93 , Password: 12345678)
 
 This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
