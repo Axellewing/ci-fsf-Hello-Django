@@ -16,7 +16,8 @@ import dj_database_url
 if os.path.isfile('env.py'):
     import env
     
-    #om du vill ha ElepahntSQL ta bort denna kommentar och flytta upp under import path.
+    #ElepahntSQL (data bas) ta bort denna kommentar och flytta upp under import path. Om ja vill ha db.sqlite3 så,
+    #kommentera bort detta från "import os" till "import env".
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-m!sg+1(w3gq)sa9w1kz^g+x8huq+l#vj)2=l)#4(j1thb^wi@-'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production! When deploying put False, when developing put True.
 DEBUG = False
 
 ALLOWED_HOSTS = ['8000-axellewing-cifsfhellodj-suozw9opaew.ws-eu107.gitpod.io']
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# om ja vill köra ElephantSQL så kommentera detta istället. 
+# om ja vill ha db.sqlite3 så ta bort kommentaren, om ja vill ha min egna data bas på ElephantSQL så kommentera detta. 
 #DATABASES = {
 #    'default': {
 #       'ENGINE': 'django.db.backends.sqlite3',
@@ -88,7 +89,7 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 #    }
 #}
 
-# ElephantSQL om ja vill köra det istället för browser så ta bort denna kommentar. 
+# Min data bas ElephantSQL, om ja vill köra db.sqlite3 så måste jag kommentera detta och köra oavstående istället. 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
