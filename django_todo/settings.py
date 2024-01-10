@@ -16,8 +16,12 @@ import dj_database_url
 if os.path.isfile('env.py'):
     import env
     
-    #ElepahntSQL (data bas) ta bort denna kommentar och flytta upp under import path. Om ja vill ha db.sqlite3 så,
+    #ElepahntSQL (data bas) ta bort denna kommentar och flytta upp under import path. Om ja vill ha local data base db.sqlite3 så,
     #kommentera bort detta från "import os" till "import env".
+
+#This does so that DEBUG is set to True "development", but on Heroku it is set to False. So that i don't have to change between True/False.
+# Everytime i'm deploying and not.  
+development = os.environ.get('DEVELOPMENT', False)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,9 +34,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m!sg+1(w3gq)sa9w1kz^g+x8huq+l#vj)2=l)#4(j1thb^wi@-'
 
 # SECURITY WARNING: don't run with debug turned on in production! When deploying put False, when developing put True.
-DEBUG = True
+DEBUG = development
 
-ALLOWED_HOSTS = ['']
+if development:
+    ALLOWED_HOSTS = ['localhost']
+else:
+    ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]    
 
 
 # Application definition
@@ -81,7 +88,7 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# om ja vill ha db.sqlite3 så ta bort kommentaren, om ja vill ha min egna data bas på ElephantSQL så kommentera detta. 
+# Om ja vill ha local data bas db.sqlite3 så ta bort kommentaren.
 #DATABASES = {
 #    'default': {
 #       'ENGINE': 'django.db.backends.sqlite3',
@@ -89,10 +96,24 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 #    }
 #}
 
-# Min data bas ElephantSQL, om ja vill köra db.sqlite3 så måste jag kommentera detta och köra oavstående istället. 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
+# Min data bas ElephantSQL, ta bort kommentaren och kommentera den ovanför istället.  
+#DATABASES = {
+#    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+#}
+
+#Kan göra så här istället, vilket är smartare. Om vi är i development fas så använder vi local data bas db.sqlite3, 
+# annars använder vi min egna data bas, på ElephantSQL när ja deployar på Heroku och inte aktivt utvecklar. 
+if development: 
+    DATABASES = {
+        'default': {
+           'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:    
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
 
 
 # Password validation
